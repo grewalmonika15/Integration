@@ -1,0 +1,33 @@
+import re
+import json
+a = open("APIoutput.txt", "r")
+#d = open("Newout.txt", "w")
+#listValue = []
+for line in a:
+        if re.match("            \"u_csr_source\"", line):
+                s = line.split("\\r\\n")
+                b = len(s)
+                c = b - 1
+                s1 = s[0].split(" \"")
+                s2 = s[c].split("\"")
+                listValue = [s1[2]]
+                r = range(c)
+                for i in r:
+                        if (i == 0):
+                                continue
+                        listValue.append(s[i])
+                listValue.append(s2[0])
+#print(listValue)
+lengthListSplit = len(listValue)
+z = []
+for j in range(lengthListSplit):
+        k = listValue[j]
+        #print(k)
+        l = k.split(":")
+        z.append(l)
+listS = [z[x:x+2] for x in range(0, len(z), 2)]
+finList = []
+for m in range(len(listS)):
+        finList.append(dict(listS[m]))
+jsonString = json.dumps(finList)
+print(jsonString)
